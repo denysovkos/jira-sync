@@ -31,5 +31,5 @@ jobs:
         goarch: ${{ matrix.goarch }}
         goversion: "https://go.dev/dl/go1.21.2.linux-amd64.tar.gz"
         project_path: "."
-        binary_name: "jira-syn"
+        binary_name: "jira-sync"
         extra_files: LICENSE README.md
