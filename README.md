@@ -11,7 +11,7 @@ Jira-Sync is a lightweight command-line application that allows you to efficient
 
 ## Installation
 
-1. Download the Jira-Sync application for your OS/Architecture from the [Releases](https://github.com/yourusername/jira-sync/releases) page.
+1. Download the Jira-Sync application for your OS/Architecture from the [Releases](https://github.com/denysovkos/jira-sync/releases) page.
 
 2. Extract the downloaded archive to a location of your choice.
 
