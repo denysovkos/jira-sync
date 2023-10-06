@@ -1,0 +1,154 @@
+# # .github/workflows/release.yaml
+
+# on:
+#   release:
+#     types: [created]
+
+# permissions:
+#     contents: write
+#     packages: write
+
+# env:
+#   GO_VERSION: stable
+
+# jobs:
+#   build_for_linux:
+#     name: Build for Linux
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Install build dependencies
+#       run: |
+#         sudo apt-get -qq update
+#         sudo apt-get install -y --no-install-recommends \
+#           build-essential
+#     - name: Checkout
+#       uses: actions/checkout@v3
+#       with:
+#         fetch-depth: 0
+#     - name: Setup Go
+#       uses: actions/setup-go@v4
+#       with:
+#         go-version: ${{ env.GO_VERSION }}
+#     - name: Build amd64
+#       env:
+#         CGO_ENABLED: 1
+#         GOOS: linux
+#         GOARCH: amd64
+#       run: make release
+#     - name: Archive artifacts
+#       uses: actions/upload-artifact@v3
+#       with:
+#         name: dist-linux
+#         path: jira-sync-linux-*.zip
+
+#   build_for_macos:
+#     name: Build for MacOS
+#     runs-on: macos-latest
+#     steps:
+#     - name: Install build dependencies
+#       run: brew install coreutils
+#     - name: Checkout
+#       uses: actions/checkout@v3
+#       with:
+#         fetch-depth: 0
+#     - name: Setup Go
+#       uses: actions/setup-go@v4
+#       with:
+#         go-version: ${{ env.GO_VERSION }}
+#     - name: Build amd64
+#       env:
+#         CGO_ENABLED: 1
+#         GOOS: darwin
+#         GOARCH: amd64
+#       run: make release
+#     - name: Archive artifacts
+#       uses: actions/upload-artifact@v3
+#       with:
+#         name: dist-darwin
+#         path: jira-sync-darwin-*.zip
+
+#   build_for_windows:
+#     name: Build for Windows
+#     runs-on: windows-latest
+#     steps:
+#     - name: Install build dependencies
+#       run: choco install zip
+#     - name: Checkout
+#       uses: actions/checkout@v3
+#       with:
+#         fetch-depth: 0
+#     - name: Setup Go
+#       uses: actions/setup-go@v4
+#       with:
+#         go-version: ${{ env.GO_VERSION }}
+#     - name: Build amd64
+#       shell: bash
+#       env:
+#         CGO_ENABLED: 1
+#         GOOS: windows
+#         GOARCH: amd64
+#       run: make release
+#     - name: Archive artifacts
+#       uses: actions/upload-artifact@v3
+#       with:
+#         name: dist-windows
+#         path: jira-sync-windows-*.zip
+
+#   release:
+#     name: Draft Release
+#     needs:
+#       - build_for_linux
+#       - build_for_macos
+#       - build_for_windows
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Download artifacts
+#         uses: actions/download-artifact@v3
+#       - name: Release
+#         uses: softprops/action-gh-release@v1
+#         if: startsWith(github.ref, 'refs/tags/')
+#         with:
+#           name: jira-sync ${{ github.ref_name }}
+#           token: ${{ secrets.GITHUB_TOKEN }}
+#           draft: true
+#           generate_release_notes: true
+#           files: dist-*/jira-sync*.*
+
+# # jobs:
+# #   releases-matrix:
+# #     name: Release Go Binary
+# #     runs-on: ubuntu-latest
+# #     strategy:
+# #       matrix:
+# #         # build and publish in parallel: linux/386, linux/amd64, linux/arm64, windows/386, windows/amd64, darwin/amd64, darwin/arm64
+# #         # goos: [linux, windows, darwin]
+# #         goos: [linux]
+# #         goarch: [amd64, arm64]
+# #         exclude:
+# #           - goarch: arm64
+# #             goos: windows
+# #     steps:
+# #     - name: Checkout step
+# #       uses: actions/checkout@v3
+# #     - name: GCC multilib
+# #       run: |
+# #         sudo apt-get install gcc-multilib g++-multilib
+# #     - name: Where clang
+# #       run: which clang
+# #     - name: Whereis clang
+# #       run: whereis clang  
+# #     # - name: Symlink GCC
+# #     #   run: ln -s /usr/bin/clang-15 /usr/bin/clang
+# #     # - name: Symlink GCC++
+# #     #   run: ln -s /usr/bin/clang++-15 /usr/bin/clang++    
+# #     - name: Build project
+# #       uses: wangyoucao577/go-release-action@v1
+# #       with:
+# #         github_token: ${{ secrets.GITHUB_TOKEN }}
+# #         goos: ${{ matrix.goos }}
+# #         goarch: ${{ matrix.goarch }}
+# #         pre_command: "export CGO_ENABLED=1 && export CC=aarch64-linux-gnu-gcc"
+# #         goversion: "https://go.dev/dl/go1.21.2.linux-amd64.tar.gz"
+# #         project_path: "."
+# #         binary_name: "jira-sync"
+# #         extra_files: LICENSE README.md
