@@ -1,4 +1,4 @@
-BIN := go-sqlite3-crossbuild-example
+BIN := jira-sync
 ifeq ($(OS),Windows_NT)
 BIN := $(BIN).exe
 endif
@@ -19,7 +19,7 @@ build:
 .PHONY: release
 release:
 	go build -ldflags=$(BUILD_LDFLAGS) -o $(BIN) .
-	zip -r go-sqlite3-crossbuild-example-$(GOOS)-$(VERSION).zip $(BIN)
+	zip -r jira-sync-$(GOOS)-$(VERSION).zip $(BIN)
 
 .PHONY: install
 install:
