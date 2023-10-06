@@ -29,7 +29,7 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         goos: ${{ matrix.goos }}
         goarch: ${{ matrix.goarch }}
-        pre_command: export CGO_ENABLED=1
+        pre_command: CGO_ENABLED=1 go install github.com/mattn/go-sqlite3
         goversion: "https://go.dev/dl/go1.21.2.linux-amd64.tar.gz"
         project_path: "."
         binary_name: "jira-sync"
