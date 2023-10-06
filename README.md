@@ -1,4 +1,4 @@
-# Jira-Sync
+# Jira-Sync 🔄
 
 Jira-Sync is a lightweight command-line application that allows you to efficiently add spent time to your Jira tasks without the usual Jira interface freezes. It fetches your tasks where time is not tracked and provides a seamless way to update them.
 
@@ -31,7 +31,7 @@ You will be prompted to enter the following information:
 * Jira Domain: The domain of your Jira instance (e.g., https://yourcompany.atlassian.net).
 * Project Name: The name of the Jira project where you want to add spent time.
 * Email: Your Jira account email address.
-* Jira Token: To generate a Jira token, follow the instructions [here](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/).
+* Jira Token: To generate a Jira token, follow the instructions [Here ➡️](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/).
   
 After entering the required information, the application will save your configuration.
 
