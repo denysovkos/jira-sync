@@ -24,11 +24,9 @@ jobs:
     steps:
     - name: Checkout step
       uses: actions/checkout@v3
-    - name: Set up Clang
-      uses: egor-tensin/setup-clang@v1
-      with:
-        version: 15
-        platform: x64
+    - name: GCC multilib
+      run: |
+        sudo apt-get install gcc-multilib g++-multilib
     - name: Where clang
       run: which clang
     - name: Whereis clang
