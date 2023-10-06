@@ -81,7 +81,7 @@ jobs:
       uses: actions/setup-go@v4
       with:
         go-version: ${{ env.GO_VERSION }}
-    - name: Build amd64
+    - name: Build arm64
       env:
         CGO_ENABLED: 1
         GOOS: darwin
@@ -91,7 +91,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: dist-darwin
-        path: jira-sync-darwin-amd64-*.zip
+        path: jira-sync-darwin-arm64-*.zip
 
   build_for_windows:
     name: Build for Windows
