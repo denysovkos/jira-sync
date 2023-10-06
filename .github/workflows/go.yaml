@@ -39,7 +39,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: dist-linux
-        path: jira-sync-linux-*.zip
+        path: jira-sync-linux-amd-*.zip
 
   build_for_macos:
     name: Build for MacOS
@@ -65,7 +65,33 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: dist-darwin
-        path: jira-sync-darwin-*.zip
+        path: jira-sync-darwin-amd-*.zip   
+
+  build_for_macos_arm:
+    name: Build for MacOS (ARM)
+    runs-on: macos-latest
+    steps:
+    - name: Install build dependencies
+      run: brew install coreutils
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Setup Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: ${{ env.GO_VERSION }}
+    - name: Build amd64
+      env:
+        CGO_ENABLED: 1
+        GOOS: darwin
+        GOARCH: arm64
+      run: make release
+    - name: Archive artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: dist-darwin
+        path: jira-sync-darwin-arm-*.zip
 
   build_for_windows:
     name: Build for Windows
@@ -92,7 +118,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: dist-windows
-        path: jira-sync-windows-*.zip
+        path: jira-sync-windows-amd-*.zip
 
   release:
     name: Draft Release
