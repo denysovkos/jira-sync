@@ -39,7 +39,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: dist-linux
-        path: jira-sync-linux-amd-*.zip
+        path: jira-sync-linux-amd64-*.zip
 
   build_for_macos:
     name: Build for MacOS
@@ -65,7 +65,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: dist-darwin
-        path: jira-sync-darwin-amd-*.zip   
+        path: jira-sync-darwin-amd64-*.zip   
 
   build_for_macos_arm:
     name: Build for MacOS (ARM)
@@ -91,7 +91,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: dist-darwin
-        path: jira-sync-darwin-arm-*.zip
+        path: jira-sync-darwin-amd64-*.zip
 
   build_for_windows:
     name: Build for Windows
@@ -118,13 +118,14 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: dist-windows
-        path: jira-sync-windows-amd-*.zip
+        path: jira-sync-windows-amd64-*.zip
 
   release:
     name: Draft Release
     needs:
       - build_for_linux
       - build_for_macos
+      - build_for_macos_arm
       - build_for_windows
     runs-on: ubuntu-latest
     steps:

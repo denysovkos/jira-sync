@@ -6,6 +6,7 @@ VERSION := $$(make -s show-version)
 CURRENT_REVISION := $(shell git rev-parse --short HEAD)
 BUILD_LDFLAGS := "-s -w -X main.revision=$(CURRENT_REVISION)"
 GOOS := $(shell go env GOOS)
+GOARCH := $(shell go env GOARCH)
 GOBIN ?= $(shell go env GOPATH)/bin
 export GO111MODULE=on
 
@@ -19,7 +20,7 @@ build:
 .PHONY: release
 release:
 	go build -ldflags=$(BUILD_LDFLAGS) -o $(BIN) .
-	zip -r jira-sync-$(GOOS)-$(VERSION).zip $(BIN)
+	zip -r jira-sync-$(GOOS)-$(GOARCH)-$(VERSION).zip $(BIN)
 
 .PHONY: install
 install:
